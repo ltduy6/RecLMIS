@@ -54,7 +54,7 @@ pip install -r requirements.txt
 3. Download pretrained CLIP: [ViT-B-32.pt](https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt), and put it in the folder `nets/`
 
 # 🗃️Dataset
-1. You can refer to [MedPLIB](https://github.com/HUANGLIZI/LViT) to download the dataset.
+1. You can refer to [LViT](https://github.com/HUANGLIZI/LViT) to download the dataset.
 
 2. If your dataset is not in current path or disk, you can modify the path in `Config_xxx.py` file or ues `ln -s {old_path} {./datasets}` to create a soft link to link the data to current path.
 
