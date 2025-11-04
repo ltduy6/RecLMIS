@@ -50,69 +50,57 @@ def download_covid19_model(test_session="session_09.25_00h27", model_type="RecLM
 
 def download_datasets():
     """
-    Download datasets folder from Google Drive.
-    Uses alternative methods to handle large folders with >50 files.
+    Download datasets ZIP file from Google Drive and extract it.
     """
     
-    # Google Drive folder ID extracted from the share link
-    folder_id = "10q_sGJIbdggqy6HB61FSuIs5g1X7ccDc"
+    # Google Drive file ID extracted from your share link
+    file_id = "1AxR7kKxtzOiDS8citEljA8fbhyypne2j"
     
     # Create datasets directory
     datasets_dir = "./datasets/"
     os.makedirs(datasets_dir, exist_ok=True)
     
-    print(f"Downloading datasets to: {datasets_dir}")
-    print("This may take a while depending on the folder size...")
-    
-    # Method 1: Try to download as a zip file (if available)
-    zip_url = f"https://drive.google.com/uc?id={folder_id}&export=download"
+    # Define the ZIP file path
     zip_path = os.path.join(datasets_dir, "datasets.zip")
     
+    # Download URL for Google Drive
+    download_url = f"https://drive.google.com/uc?id={file_id}"
+    
+    print(f"Downloading datasets ZIP file to: {zip_path}")
+    print("This may take a while depending on the file size...")
+    
     try:
-        print("🔄 Attempting to download as ZIP file...")
+        # Download the ZIP file
+        gdown.download(download_url, zip_path, quiet=False)
+        print(f"✅ ZIP file downloaded successfully to: {zip_path}")
         
-        # Try downloading as zip
-        response = requests.get(zip_url, stream=True)
-        if response.status_code == 200:
-            with open(zip_path, 'wb') as f:
-                for chunk in response.iter_content(chunk_size=8192):
-                    f.write(chunk)
+        # Verify the file exists and has content
+        if os.path.exists(zip_path):
+            file_size = os.path.getsize(zip_path)
+            print(f"📁 ZIP file size: {file_size / (1024*1024):.2f} MB")
             
-            # Extract the zip file
+            # Extract the ZIP file
             print("📦 Extracting ZIP file...")
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 zip_ref.extractall(datasets_dir)
             
-            # Remove the zip file
+            # Remove the ZIP file after extraction
             os.remove(zip_path)
-            print(f"✅ Datasets downloaded and extracted successfully to: {datasets_dir}")
+            print(f"✅ Datasets extracted successfully to: {datasets_dir}")
+            
+            # List the contents to verify
+            if os.path.exists(datasets_dir):
+                contents = os.listdir(datasets_dir)
+                print(f"📂 Extracted contents: {contents}")
             
         else:
-            raise Exception("ZIP download failed")
+            print("❌ Download failed - ZIP file not found")
             
     except Exception as e:
-        print(f"❌ ZIP download method failed: {str(e)}")
-        print("🔄 Trying alternative method...")
-        
-        # Method 2: Try gdown folder download with chunking
-        try:
-            print("🔄 Attempting folder download with gdown...")
-            gdown.download_folder(
-                f"https://drive.google.com/drive/folders/{folder_id}",
-                output=datasets_dir,
-                quiet=False,
-                use_cookies=False,
-                remaining_ok=True  # Continue even if some files fail
-            )
-            print(f"✅ Partial datasets downloaded to: {datasets_dir}")
-            
-        except Exception as e2:
-            print(f"❌ Folder download also failed: {str(e2)}")
-            print("🔄 Trying manual file-by-file download...")
-            
-            # Method 3: Manual download with known file structure
-            manual_download_covid19_dataset(datasets_dir)
-
+        print(f"❌ Error downloading datasets: {str(e)}")
+        print("💡 Make sure you have gdown installed: pip install gdown")
+        print("💡 You can also try the manual download option:")
+        print(f"💡 https://drive.google.com/file/d/{file_id}/view?usp=sharing")
 
 def manual_download_covid19_dataset(datasets_dir):
     """
