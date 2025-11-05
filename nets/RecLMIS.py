@@ -315,7 +315,8 @@ class RecLMIS(nn.Module):
                     loss_dic["loss_ccl"] = cond_cons_loss
                 else:
                     loss_token_cons = 0
-            except:
+            except Exception as e:
+                print("reconstruction error:", e)
                 self.aux = False
                 rec_loss_dic = {}
         else:
