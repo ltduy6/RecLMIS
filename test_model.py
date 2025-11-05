@@ -93,7 +93,7 @@ def vis_and_save_heatmap(model, input_img, masks, text_token, text_mask, img_RGB
     original_image = original_image.transpose(1, 2, 0).astype(np.uint8)
 
     if args.test_vis:
-        nums = 1
+        nums = 3
         fig = plt.figure(figsize=(nums,1), dpi=size[0])
         fig.subplots_adjust(wspace=0.01, left=0, right=1, bottom=0,top=1)
         # draw img
