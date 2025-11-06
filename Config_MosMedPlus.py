@@ -25,6 +25,7 @@ pretrain = False
 task_name = 'MosMedplus'
 token_len = 18
 learning_rate = 3e-4  
+file_id = "1IcclC7Gi0RBmWPj-JMM2qI2w4CHbxtuc"
 
 batch_size = 20 
 

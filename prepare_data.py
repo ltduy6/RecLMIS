@@ -4,21 +4,23 @@ import argparse
 import urllib.request
 import zipfile
 import requests
+import shutil
+import Config_covid19 as config_covid19
+import Config_MosMedPlus as config_mosmedplus
 
-def download_covid19_model(test_session="session_09.25_00h27", model_type="RecLMIS"):
+def download_model(test_session="session_09.25_00h27", model_type="RecLMIS", file_id=config_covid19.file_id, task_name=config_covid19.task_name):
     """
     Download pretrained Covid19 model from Google Drive and save it to the correct folder structure.
     
     Args:
         test_session (str): Session name for the model
         model_type (str): Model type name
+        file_id (str): Google Drive file ID for the model
+        dataset_name (str): Dataset name (default: "Covid19")
     """
     
-    # Google Drive file ID extracted from the share link
-    file_id = "1SEj361mYZqAZ2fYJfFquMVxjv3d6RqKm"
-    
     # Create the folder structure based on the test_model.py code
-    model_dir = f"./Covid19/{model_type}/{test_session}/models/"
+    model_dir = f"./{task_name}/{model_type}/{test_session}/models/"
     
     # Create directories if they don't exist
     os.makedirs(model_dir, exist_ok=True)
@@ -331,14 +333,16 @@ if __name__ == "__main__":
     # Download based on arguments
     if args.download_all:
         print("🚀 Downloading model, datasets, and ViT-B-32...")
-        download_covid19_model(args.test_session, args.model_type)
+        download_model(file_id=config_covid19.file_id, task_name=config_covid19.task_name)
+        download_model(file_id=config_mosmedplus.file_id, task_name=config_mosmedplus.task_name)
         print("\n" + "="*50 + "\n")
         download_datasets()
         print("\n" + "="*50 + "\n")
         download_vit_model()
     elif args.download_model:
         print("🚀 Downloading model only...")
-        download_covid19_model(args.test_session, args.model_type)
+        download_model(file_id=config_covid19.file_id, task_name=config_covid19.task_name)
+        download_model(file_id=config_mosmedplus.file_id, task_name=config_mosmedplus.task_name)
     elif args.download_datasets:
         print("🚀 Downloading datasets only...")
         download_datasets()

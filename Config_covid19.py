@@ -28,6 +28,7 @@ batch_size = 32
 token_len = 18
 optimizer = "Adam"
 weight_decay = 1e-5
+file_id = "1SEj361mYZqAZ2fYJfFquMVxjv3d6RqKm"
 
 
 model_name = 'RecLMIS'
