@@ -30,6 +30,8 @@ args = parser.parse_args()
 
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 
+print("Using config file:", args.cfg_path)
+
 if args.cfg_path == "Config_monuseg":
     import Config_monuseg as config
 elif args.cfg_path == "Config_MosMedPlus":
