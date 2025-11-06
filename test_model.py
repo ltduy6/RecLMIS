@@ -39,6 +39,8 @@ elif args.cfg_path == "Config_MosMedPlus":
 else:
     import Config_covid19 as config
 
+print("Config task name is:", config.task_name)
+
 
 red_color = (255, 0, 0)     # red
 blue_color = (0, 0, 255)  # blue
