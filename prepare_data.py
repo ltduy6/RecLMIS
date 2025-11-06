@@ -60,7 +60,7 @@ def download_datasets():
     file_id = "1AxR7kKxtzOiDS8citEljA8fbhyypne2j"  # Updated to your correct file ID
     
     # Define datasets directory
-    datasets_dir = "./"
+    datasets_dir = os.getcwd()
     
     # Remove existing datasets folder if it exists
     if os.path.exists(datasets_dir):
