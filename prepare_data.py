@@ -57,10 +57,10 @@ def download_datasets():
     """
     
     # Google Drive file ID extracted from your share link
-    file_id = "1AxR7kKxtzOiDS8citEljA8fbhyypne2j"  # Updated to your correct file ID
+    file_id = "1qyprFJNs1X-AaknwEMMXjkkIDqz_T0ab"  # Updated to your correct file ID
     
     # Define datasets directory
-    datasets_dir = os.getcwd()
+    datasets_dir = "./datasets/"
     
     # Remove existing datasets folder if it exists
     if os.path.exists(datasets_dir):
